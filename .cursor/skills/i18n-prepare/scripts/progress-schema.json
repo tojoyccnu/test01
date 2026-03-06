@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "i18n-progress-schema",
+  "title": "i18n Progress File",
+  "description": "Schema for i18n-prepare skill progress tracking file",
+  "type": "object",
+  "required": ["version", "status", "targetDirectory", "batches"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Progress file format version",
+      "const": "1.0"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when processing started"
+    },
+    "lastUpdateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of last progress update"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed"],
+      "description": "Overall processing status"
+    },
+    "targetDirectory": {
+      "type": "string",
+      "description": "Target directory that was scanned"
+    },
+    "currentBatch": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Current batch being processed (1-based index)"
+    },
+    "totalBatches": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of batches"
+    },
+    "batches": {
+      "type": "array",
+      "description": "List of processing batches",
+      "items": {
+        "type": "object",
+        "required": ["id", "module", "status", "files"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Batch ID (1-based)"
+          },
+          "module": {
+            "type": "string",
+            "description": "Module name this batch belongs to"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed"],
+            "description": "Batch processing status"
+          },
+          "files": {
+            "type": "array",
+            "description": "Files in this batch",
+            "items": {
+              "type": "object",
+              "required": ["path", "status"],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "Relative file path"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["pending", "completed", "skipped", "failed"],
+                  "description": "File processing status"
+                },
+                "error": {
+                  "type": "string",
+                  "description": "Error message if status is 'failed'"
+                }
+              }
+            }
+          },
+          "generatedKeys": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of i18n keys generated in this batch"
+          },
+          "languageFile": {
+            "type": "string",
+            "description": "Target language file for this batch"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Overall progress summary",
+      "properties": {
+        "totalFiles": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of files to process"
+        },
+        "processedFiles": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of files processed so far"
+        },
+        "totalKeys": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total estimated i18n keys"
+        },
+        "generatedKeys": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of keys generated so far"
+        }
+      }
+    }
+  }
+}

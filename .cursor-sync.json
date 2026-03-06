@@ -1,0 +1,9 @@
+{
+  "project": {
+    "id": 16,
+    "name": ""
+  },
+  "branch": "main",
+  "checkInterval": 300,
+  "autoCheck": true
+}

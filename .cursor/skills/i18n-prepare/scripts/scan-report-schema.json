@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "i18n-scan-report-schema",
+  "title": "i18n Scan Report",
+  "description": "Schema for i18n-prepare skill scan report file",
+  "type": "object",
+  "required": ["scanTime", "targetDirectory", "summary", "modules", "fileDetails"],
+  "properties": {
+    "scanTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when scan was performed"
+    },
+    "targetDirectory": {
+      "type": "string",
+      "description": "Directory that was scanned"
+    },
+    "summary": {
+      "type": "object",
+      "required": ["totalFiles", "filesWithChinese", "totalChineseStrings"],
+      "properties": {
+        "totalFiles": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of Vue/TS files scanned"
+        },
+        "filesWithChinese": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of files containing Chinese strings"
+        },
+        "totalChineseStrings": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total count of Chinese strings found"
+        }
+      }
+    },
+    "modules": {
+      "type": "object",
+      "description": "Files grouped by module",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "fileCount", "chineseCount", "files"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Module name"
+          },
+          "fileCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of files in this module with Chinese"
+          },
+          "chineseCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Total Chinese strings in this module"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["path", "count"],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "Relative file path"
+                },
+                "count": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Number of Chinese strings in this file"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fileDetails": {
+      "type": "array",
+      "description": "Detailed information for each file",
+      "items": {
+        "type": "object",
+        "required": ["path", "relativePath", "count", "strings"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Absolute file path"
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Path relative to workspace root"
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of Chinese strings"
+          },
+          "strings": {
+            "type": "array",
+            "description": "List of Chinese strings found",
+            "items": {
+              "type": "object",
+              "required": ["text", "line", "column", "context", "type"],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "The Chinese text found"
+                },
+                "line": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Line number (1-based)"
+                },
+                "column": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Column number (1-based)"
+                },
+                "context": {
+                  "type": "string",
+                  "enum": ["template", "script", "style"],
+                  "description": "Which section of the file"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["text", "attribute", "string-literal"],
+                  "description": "Type of Chinese occurrence"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+---
+description: 前端测试规范，定义测试类型和覆盖率要求
+globs:
+alwaysApply: true
+---
+
+# 前端测试规范
+
+## 最低测试覆盖率：80%
+
+测试类型（全部必需）：
+
+1. **单元测试** - 工具函数、Composables、纯函数
+2. **组件测试** - Vue 组件的渲染、交互、状态
+3. **E2E 测试** - 关键用户流程（Playwright）
+
+## 测试工具
+
+- **Vitest** - 单元测试和组件测试
+- **@vue/test-utils** - Vue 组件测试工具
+- **@testing-library/vue** - 以用户行为为中心的测试
+- **Playwright** - E2E 端到端测试
+
+## 测试失败排查
+
+1. 检查测试隔离性
+2. 验证 Mock 是否正确
+3. 修复实现代码，而非修改测试（除非测试本身有误）
+
+## 常用命令
+
+```bash
+pnpm test              # 监听模式运行测试
+pnpm test:run          # 单次运行测试
+pnpm test:coverage     # 运行测试并生成覆盖率报告
+pnpm test:e2e          # 运行 E2E 测试
+```

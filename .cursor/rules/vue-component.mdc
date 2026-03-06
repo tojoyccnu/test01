@@ -1,0 +1,38 @@
+---
+description: Vue 组件红线
+globs:
+alwaysApply: true
+---
+
+# Vue 组件红线
+
+## 结构
+
+- 单文件 ≤400 行，超出必须拆分子组件
+- 组件目录必须提供 `index.ts` 统一导出
+- 禁止在 `main.ts` 和 `App.vue` 中写业务代码
+
+## Props / Emits
+
+- Props 必须用 `interface` + `withDefaults` 定义
+- Emits 必须显式声明类型
+- Props 每个字段必须有 JSDoc 注释
+
+## 通信方式
+
+| 场景     | 方式                              |
+| -------- | --------------------------------- |
+| 双向绑定 | `defineModel`（优先）或 `v-model` |
+| 父子通信 | `props` + `emit`                  |
+| 跨层级   | `provide/inject`（≥3 层）或 Pinia |
+
+## 禁止
+
+- 禁止 EventBus / mitt
+- 禁止 `$parent` / `$refs` 直接访问内部状态
+- 禁止 `getCurrentInstance`
+- 禁止生成组件 README 文档
+
+## 命名
+
+- 事件处理函数用 `handle` 前缀：`handleSubmit`、`handleClick`

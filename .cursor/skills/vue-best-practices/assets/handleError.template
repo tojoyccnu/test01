@@ -1,0 +1,36 @@
+import { type AxiosError } from 'axios';
+
+import { tipMessage } from './tipMessage';
+
+// 默认错误提示文案，可替换为 i18n
+const DEFAULT_ERROR_MESSAGE = '请求失败，请稍后重试';
+
+/**
+ * 从各种错误格式中提取错误信息
+ * 支持: AxiosError, Error, { msg: string }, string
+ */
+export function getErrorMessage(err: unknown): string {
+  let errorMessage = DEFAULT_ERROR_MESSAGE;
+
+  if ((err as AxiosError)?.isAxiosError) {
+    errorMessage = DEFAULT_ERROR_MESSAGE;
+  } else if (err instanceof Error) {
+    errorMessage = err.message;
+  } else if (typeof err === 'object' && err !== null && 'msg' in err) {
+    errorMessage = (err as { msg: string }).msg;
+  } else if (typeof err === 'string') {
+    errorMessage = err;
+  } else {
+    console.error('Unexpected error format:', err);
+  }
+
+  return errorMessage;
+}
+
+/**
+ * 统一错误处理：提取错误信息并显示提示
+ */
+export function handleError(err: unknown): void {
+  const errorMessage = getErrorMessage(err);
+  tipMessage(errorMessage, 'error');
+}

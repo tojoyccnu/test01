@@ -1,0 +1,18 @@
+---
+description: 国际化红线
+globs:
+alwaysApply: true
+---
+
+# 国际化红线
+
+## 约束
+
+- 所有用户可见文案必须使用 i18n，禁止硬编码中文
+- 创建 i18n 或者`中文`转换成 i18n 的场景使用 `i18n-prepare` skill
+
+## 禁止
+
+- 禁止字符串拼接，使用参数插值
+- 禁止在 i18n 文件中使用 HTML 标签
+- 禁止创建或更新除中文外（src/language/zh-CN）的 i18n 文件

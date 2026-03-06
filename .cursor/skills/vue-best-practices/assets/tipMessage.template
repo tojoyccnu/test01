@@ -1,0 +1,37 @@
+import { isObject } from 'lodash-es';
+import {
+  Message,
+  type MessageConfig,
+  type MessageReturn,
+  type MessageType,
+} from '@arco-design/web-vue';
+
+const messageQueue: MessageReturn[] = [];
+const MAX_MESSAGES = 2;
+
+export type TipMessageConfig = MessageConfig & {
+  maxMessageCount?: number;
+};
+
+/**
+ * 显示消息提示，限制最多同时显示 2 条
+ * @param config 消息内容或配置对象
+ * @param type 消息类型：'success' | 'error' | 'warning' | 'info'
+ */
+export function tipMessage(config: TipMessageConfig | string, type?: MessageType): void {
+  const maxMessageCount = isObject(config) ? config?.maxMessageCount || MAX_MESSAGES : MAX_MESSAGES;
+  if (!config) {
+    console.error('Empty message provided to tipMessage');
+    return;
+  }
+
+  if (messageQueue.length >= maxMessageCount) {
+    const oldestMessage = messageQueue.shift();
+    oldestMessage?.close();
+  }
+
+  const newMessage = Message[type || 'error']({
+    ...(typeof config === 'string' ? { content: config } : config),
+  });
+  messageQueue.push(newMessage);
+}

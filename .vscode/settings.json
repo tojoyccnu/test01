@@ -1,0 +1,37 @@
+{
+    "git.path": "C:/msys64/usr/bin/git.exe",
+    "remote.SSH.configFile": "D://ssh/config",
+    "remote.SSH.remotePlatform": {
+        "192.168.75.171": "linux",
+        "huatao-dev": "linux",
+        "171-host": "linux"
+    },
+    "dev.containers.dockerPath": "podman",
+    "dev.containers.defaultFeatures": {},
+    "dev.containers.dockerComposePath": "podman-compose",
+    "dev.containers.dockerSocketPath": "unix:///run/user/$(id -u)/podman/podman.sock",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.workspaceSymbols": "All",
+    "C_Cpp.clang_format_fallbackStyle": "clang-format",
+    "C_Cpp.default.compilerPath": "",
+    "chat.viewSessions.orientation": "stacked",
+    "window.openFoldersInNewWindow": "on",
+    "makefile.configureOnOpen": true,
+    "editor.codeActionsOnSave": {},
+    "terminal.integrated.defaultProfile.windows": "MSYS2 UCRT",
+    "terminal.integrated.profiles.windows": {
+        "MSYS2 UCRT": {
+            "path": "C:\\msys64\\msys2_shell.cmd",
+            "args": [
+                "-defterm",
+                "-here",
+                "-no-start",
+                "-ucrt64",
+                "-shell",
+                "bash"
+            ]
+        }
+    },
+    "remote.autoForwardPortsSource": "hybrid"
+}

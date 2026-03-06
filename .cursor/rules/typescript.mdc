@@ -1,0 +1,29 @@
+---
+description: TypeScript 红线
+globs:
+alwaysApply: true
+---
+
+# TypeScript 红线
+
+## 禁止 any
+
+- 禁止使用 `any`，使用 `unknown` + 类型收窄
+- 任意对象用 `Record<string, unknown>`
+- 任意数组用 `unknown[]`
+
+## type vs interface
+
+| 场景                         | 选择        |
+| ---------------------------- | ----------- |
+| 对象结构（Props、API 响应）  | `interface` |
+| 联合类型、函数类型、工具类型 | `type`      |
+
+## 类型断言
+
+- 禁止滥用 `as`，优先类型守卫
+- 禁止非空断言 `!`，使用可选链 `?.` + 默认值 `??`
+
+## 枚举
+
+- 禁止数字枚举，使用字符串枚举或字面量联合类型

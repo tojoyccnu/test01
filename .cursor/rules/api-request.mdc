@@ -1,0 +1,22 @@
+---
+description: API 请求红线
+globs:
+alwaysApply: true
+---
+
+# API 请求红线
+
+## 约束
+
+- 必须使用 TanStack Query 管理服务端状态
+- service 文件由工具自动生成，禁止手动编写
+- 禁止在组件内直接调用 axios/fetch
+
+## Query Key
+
+- 使用层级结构：`["users", { page, filters }]`（列表）、`["users", userId]`（详情）
+- queryKey 定义为常量，集中管理在 `src/constant/queryKeys.ts`
+
+## 缓存
+
+- Mutation 成功后必须 `invalidateQueries` 使相关查询失效

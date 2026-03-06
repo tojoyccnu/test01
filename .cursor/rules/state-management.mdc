@@ -1,0 +1,23 @@
+---
+description: 状态管理红线
+globs:
+alwaysApply: true
+---
+
+# 状态管理红线（Pinia）
+
+## 约束
+
+- 必须使用 Setup Store（组合式）语法
+- Store 文件命名：`use` 前缀 + `Store` 后缀，如 `useUserStore.ts`
+- 必须提供 `reset` 方法（Setup Store 无内置 `$reset`）
+- 修改数组/对象时必须创建新引用（不可变更新）
+
+## 状态选择
+
+| 场景            | 方式               |
+| --------------- | ------------------ |
+| 组件内部状态    | `ref` / `reactive` |
+| 父子组件        | `props` + `emit`   |
+| 跨页面/跨组件树 | Pinia Store        |
+| 服务端数据      | TanStack Query     |
